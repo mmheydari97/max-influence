@@ -1,112 +1,39 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer Presentation
-% LaTeX Template
-% Version 1.0 (10/11/12)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
-
 \documentclass{beamer}
 
 \mode<presentation> {
-
-% The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
-
-%\usetheme{default}
-%\usetheme{AnnArbor}
-%\usetheme{Antibes}
-%\usetheme{Bergen}
-%\usetheme{Berkeley}
-%\usetheme{Berlin}
-%\usetheme{Boadilla}
-%\usetheme{CambridgeUS}
-%\usetheme{Copenhagen}
-%\usetheme{Darmstadt}
-%\usetheme{Dresden}
-%\usetheme{Frankfurt}
-%\usetheme{Goettingen}
-%\usetheme{Hannover}
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}
 \usetheme{Madrid}
-%\usetheme{Malmoe}
-%\usetheme{Marburg}
-%\usetheme{Montpellier}
-%\usetheme{PaloAlto}
-%\usetheme{Pittsburgh}
-%\usetheme{Rochester}
-%\usetheme{Singapore}
-%\usetheme{Szeged}
-%\usetheme{Warsaw}
-
-% As well as themes, the Beamer class has a number of color themes
-% for any slide theme. Uncomment each of these in turn to see how it
-% changes the colors of your current slide theme.
-
-%\usecolortheme{albatross}
-%\usecolortheme{beaver}
-%\usecolortheme{beetle}
-%\usecolortheme{crane}
-%\usecolortheme{dolphin}
-%\usecolortheme{dove}
-%\usecolortheme{fly}
-%\usecolortheme{lily}
-%\usecolortheme{orchid}
-%\usecolortheme{rose}
-%\usecolortheme{seagull}
-%\usecolortheme{seahorse}
-%\usecolortheme{whale}
-%\usecolortheme{wolverine}
-
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
-
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
-\usepackage{graphicx} % Allows including images
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{graphicx}
+\usepackage{booktabs}
 
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
-
-\title[Decision Tree]{Optimal binary decision tree} % The short title appears at the bottom of every slide, the full title is only on the title page
-
-\author{Mohammad Mahdi Heydari} % Your name
-\institute[AUT] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+\title[Decision Tree]{Optimal binary decision tree}
+\author{Mohammad Mahdi Heydari}
+\institute[AUT] 
 {
-Amirkabir University of Technology \\ % Your institution for the title page
+Amirkabir University of Technology \\ 
 \medskip
-\textit{} % Your email address
+\textit{} 
 }
-\date{June 1, 2019} % Date, can be changed to a custom date
+\date{June 1, 2019} 
 
 \begin{document}
 
 \begin{frame}
-\titlepage % Print the title page as the first slide
+\titlepage 
 \end{frame}
 
 \begin{frame}
-\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\frametitle{Overview}
+\tableofcontents
 \end{frame}
 
-
 \section{Introduction}
+\begin{frame}
+	\frametitle{Introduction}
+	\includegraphics[width=\linewidth]{Pics/dtree.jpg}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Introduction}
 	\begin{itemize}
@@ -150,178 +77,112 @@ Amirkabir University of Technology \\ % Your institution for the title page
 	\end{block}
 \end{frame}
 
-
 \begin{frame}
-\Huge
-\centering
-Any Question?
+	\frametitle{Optimization vs. Decision}
+	\begin{figure}
+		\includegraphics[height=0.33\textheight]{Pics/opt.jpg}
+	\end{figure}
+	
+	\begin{figure}
+		\includegraphics[height=0.3\textheight]{Pics/decision.png}
+	\end{figure}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
+\section{Decision Problem}
+\begin{frame}
+	\frametitle{Decision Problem}
+	\begin{block}{Decision}
+		The decision tree problem $DT(\tau, X, w)$ is to determine whether there exists a decision tree with 
+		cost less than or equal to $w$ given $\tau$ and $X$.
+	\end{block}
+	\begin{theorem}
+		$DT(\tau, X, w)$ is NP-complete.
+	\end{theorem}
+	\begin{proof}
+		$DT\in NP$. since a a non-deterministic Turing machine can guess the decision tree and then see if its
+		weight is less than or equal to $w$.
+	\end{proof}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Decision Problem}
+	\begin{proof}
+		To show that DT is NP-complete, we show that $EC3 \alpha DT$, where EC3 is the problem of finding
+		an exact cover for a set X, and where each of the subsets available for use contains exactly 3 elements.
+		More precisely, we are given a set $X={x_1,... , x_n}$ and a family $\tau = {T_1,... , T_t}$ of subsets
+		of X, such that $|T_i|=3$ for $1\le i \le t$, and we wish to find a subset $S$ of $\tau$ such that
+		$\bigcup\limits_{T_i \in S} T_{i} = X$ and $(({T_i, T_j}\subseteq S$ and 
+		$i\ne j) \Rightarrow T_i \cap T_j = \emptyset)$. The exact cover problem EC (where there is no restriction on the size of each $T_i$) is known to be NP-complete. To show that EC3 is NP-complete,
+		we show $3DM \alpha EC3$, where 3DM is the problem of finding a "three-dimensional matching".
+	\end{proof}
+\end{frame}
+
+\section{Approximation DT}
+\begin{frame}
+	\frametitle{Approximation DT}
+	Given a set of binary m-bit strings S, choosing some bit i always partitions the items into two sets $S_0$ and $S_1$ where $S_0$ contains those items with bit i = 0 and $S_1$ contains those items with i = 1. A greedy strategy
+	for splitting a set S chooses the bit i which minimizes the difference between the size of $S_0$ and $S_1$. In other
+	words, it chooses the bit which most evenly partitions the set. Using this strategy, consider the following
+	greedy algorithm for constructing decision trees of the DT type given a set of n items X:
+\end{frame}	
+
+\begin{frame}
+	\frametitle{Approximation DT}
+	\begin{figure}
+		\includegraphics[width=0.9\linewidth]{Pics/greedy.png}
+	\end{figure}
+	
+	A straightforward implementation on this algorithm runs in time $O(mn^2)$. While the algorithm does not
+	always give an optimal solution, it does approximate it within a factor of $ln(n) + 1$.
+\end{frame}
+
+\section{Create Test Set}
+\begin{frame}
+	\frametitle{Create Test Set}
+	Split Approaches:
+	\begin{itemize}
+		\item
+		Oblique
+		\item
+		Axis-Parallel \checkmark
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.5\linewidth]{Pics/oblique.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Split Measures}
+	\begin{itemize}
+		\item Information Gain
+		\[Info(D)=-\sum_{i=1}^{m} p_i\hspace{4pt} log_2 (p_i)\]
+		\[Info_A(D)= \sum_{j=1}^{v} \frac{|D_j|}{|D|}\times Info(D_j)\]
+		\[Gain(A) = Info(D) - Info_A(D) \]
+		
+		\item Gini\\
+		\[Gini(D) = 1- \sum_{i=1}^{m} p_i^2\]
+		\[Gini_A(D) = \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2)\]
+		\[\Delta Gini(A) = Gini(D) - Gini_A(D)\]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+	\begin{itemize}
+		\item
+		Hyafil, Laurent \& L. Rivest, Ronald. (1976). Constructing Optimal Binary Decision Trees is NP-Complete. Inf. Process. Lett.. 5. 15-17. 10.1016/0020-0190(76)90095-8. 
+		\item
+		Adler, Micah \& Heeringa, Brent. (2008). Approximating Optimal Binary Decision Trees. 10.1007/978-3-540-85363-3\_1. 
+		\item
+		Data Mining: Concepts and Techniques, Second Edition
+		Jiawei Han and Micheline Kamber (2006)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\Huge
+	\centering
+	Any Question?
+\end{frame}
 
 \end{document} 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%
-%
-%%----------------------------------------------------------------------------------------
-%%	PRESENTATION SLIDES
-%%----------------------------------------------------------------------------------------
-%
-%%------------------------------------------------
-%\section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
-%%------------------------------------------------
-%
-%\subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-%
-%\begin{frame}
-%\frametitle{Paragraphs of Text}
-%Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
-%
-%Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Bullet Points}
-%\begin{itemize}
-%\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-%\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-%\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-%\item Nam cursus est eget velit posuere pellentesque
-%\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-%\end{itemize}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Blocks of Highlighted Text}
-%\begin{block}{Block 1}
-%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-%\end{block}
-%
-%\begin{block}{Block 2}
-%Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-%\end{block}
-%
-%\begin{block}{Block 3}
-%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-%\end{block}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Multiple Columns}
-%\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-%
-%\column{.45\textwidth} % Left column and width
-%\textbf{Heading}
-%\begin{enumerate}
-%\item Statement
-%\item Explanation
-%\item Example
-%\end{enumerate}
-%
-%\column{.5\textwidth} % Right column and width
-%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-%
-%\end{columns}
-%\end{frame}
-%
-%%------------------------------------------------
-%\section{Second Section}
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Table}
-%\begin{table}
-%\begin{tabular}{l l l}
-%\toprule
-%\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-%\midrule
-%Treatment 1 & 0.0003262 & 0.562 \\
-%Treatment 2 & 0.0015681 & 0.910 \\
-%Treatment 3 & 0.0009271 & 0.296 \\
-%\bottomrule
-%\end{tabular}
-%\caption{Table caption}
-%\end{table}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Theorem}
-%\begin{theorem}[Mass--energy equivalence]
-%$E = mc^2$
-%\end{theorem}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-%\frametitle{Verbatim}
-%\begin{example}[Theorem Slide Code]
-%\begin{verbatim}
-%\begin{frame}
-%\frametitle{Theorem}
-%\begin{theorem}[Mass--energy equivalence]
-%$E = mc^2$
-%\end{theorem}
-%\end{frame}\end{verbatim}
-%\end{example}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{Figure}
-%Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-%%\begin{figure}
-%%\includegraphics[width=0.8\linewidth]{test}
-%%\end{figure}
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-%\frametitle{Citation}
-%An example of the \verb|\cite| command to cite within the presentation:\\~
-%
-%This statement requires citation \cite{p1}.
-%\end{frame}
-%
-%%------------------------------------------------
-%
-%\begin{frame}
-%\frametitle{References}
-%\footnotesize{
-%\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-%\bibitem[Smith, 2012]{p1} John Smith (2012)
-%\newblock Title of the publication
-%\newblock \emph{Journal Name} 12(3), 45 -- 678.
-%\end{thebibliography}
-%}
-%\end{frame}
-%
-%%------------------------------------------------
