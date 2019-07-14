@@ -136,7 +136,16 @@ Amirkabir University of Technology \\
 	always give an optimal solution, it does approximate it within a factor of $ln(n) + 1$.
 \end{frame}
 
-\section{Create Test Set}
+\section{Application}
+\begin{frame}
+	\frametitle{Application}
+	\begin{block}{}
+		In some applications we have X set as tuples with some attributes and we are free to choose $\tau$ set.
+		The leaves should only classify $x_j$s (vs. identification).
+		There are some greedy algorithms to construct these decision trees. Our goal will be to find a 
+		split leading to the most monotonous subtrees.
+	\end{block}
+\end{frame}
 \begin{frame}
 	\frametitle{Create Test Set}
 	Split Approaches:
@@ -159,7 +168,7 @@ Amirkabir University of Technology \\
 		\[Info_A(D)= \sum_{j=1}^{v} \frac{|D_j|}{|D|}\times Info(D_j)\]
 		\[Gain(A) = Info(D) - Info_A(D) \]
 		
-		\item Gini\\
+		\item Gini (only binary)
 		\[Gini(D) = 1- \sum_{i=1}^{m} p_i^2\]
 		\[Gini_A(D) = \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2)\]
 		\[\Delta Gini(A) = Gini(D) - Gini_A(D)\]
